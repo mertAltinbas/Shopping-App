@@ -21,7 +21,7 @@ object ProductFakeData {
     val productList = listOf(
         product, Product(
             title = "Light Dress",
-            price = 260.00f,
+            price = 160.00f,
             description = text,
             image = R.drawable.light_dress,
             isLiked = true,
