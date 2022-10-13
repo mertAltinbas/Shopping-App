@@ -38,22 +38,6 @@ import com.info.shoppingapp.presentation.tiles.home.NewItemsListTile
 
 @Composable
 fun HomeView() {
-    val systemUiController = rememberSystemUiController()
-    val isDark = isSystemInDarkTheme()
-    val systemBar = colors.background
-    val navigationBar = colors.primary
-    SideEffect {
-        systemUiController.setSystemBarsColor(
-            color = systemBar,
-            darkIcons = !isDark
-        )
-        systemUiController.setNavigationBarColor(
-            color = navigationBar,
-            darkIcons = !isDark
-        )
-
-    }
-
     Scaffold(topBar = {
         SearchBar()
     }) {
