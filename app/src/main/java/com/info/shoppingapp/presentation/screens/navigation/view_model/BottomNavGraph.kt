@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.info.shoppingapp.presentation.screens.navigation.screens.basket.BasketView
 import com.info.shoppingapp.presentation.screens.navigation.screens.basket.BasketScreen
 import com.info.shoppingapp.presentation.screens.navigation.screens.favorite.FavoriteScreen
 import com.info.shoppingapp.presentation.screens.navigation.screens.home.HomeView
@@ -22,7 +23,7 @@ fun BottomNavGraph(navController: NavHostController) {
             FavoriteScreen()
         }
         composable(route = NavigationScreen.Basket.route) {
-            BasketScreen()
+            BasketView()
         }
         composable(route = NavigationScreen.Profile.route) {
             ProfileScreen()

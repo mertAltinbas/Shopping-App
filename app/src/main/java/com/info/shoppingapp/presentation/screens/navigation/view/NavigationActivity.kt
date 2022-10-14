@@ -108,7 +108,7 @@ class NavigationActivity : ComponentActivity() {
             label = {
                 Text(
                     text = ".",
-                    style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 35.sp)
+                    style = TextStyle(fontWeight = FontWeight.SemiBold, fontSize = 35.sp)
                 )
             },
             icon = {
