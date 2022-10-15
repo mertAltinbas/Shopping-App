@@ -27,8 +27,7 @@ import com.info.shoppingapp.domain.entities.Product
 
 @Composable
 fun NewItemsListTile(data: Product, onTap: (() -> Unit) = { }) {
-    Column(
-    ) {
+    Column {
         Box(
             modifier = Modifier.clickable(onClick = onTap)
         ) {
@@ -39,6 +38,7 @@ fun NewItemsListTile(data: Product, onTap: (() -> Unit) = { }) {
                     .aspectRatio(.76f)
                     .clip(RoundedCornerShape(20.dp)),
                 contentScale = ContentScale.Crop,
+                alignment = Alignment.TopCenter
             )
             Surface(
                 shape = CircleShape,

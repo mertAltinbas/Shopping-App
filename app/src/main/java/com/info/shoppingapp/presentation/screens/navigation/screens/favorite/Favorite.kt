@@ -1,48 +1,89 @@
 package com.info.shoppingapp.presentation.screens.navigation.screens.favorite
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FilterAlt
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.info.shoppingapp.R
+import com.info.shoppingapp.core.databases.ProductFakeData
+import com.info.shoppingapp.presentation.components.Subtitle
+import com.info.shoppingapp.presentation.screens.product.ProductDetail
+import com.info.shoppingapp.presentation.tiles.favorites.FavoritesDetailListTile
 
 @Composable
-fun FavoriteScreen(){
+fun FavoriteScreen() {
+    val details = remember { ProductFakeData.productList }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .fillMaxSize()
-            .background(colors.background)
-            .wrapContentSize()
+            .padding(horizontal = 10.dp)
+            .statusBarsPadding()
     ) {
-        Image(
-            painterResource(R.drawable.glasses),
-            contentDescription = null
-        )
-        Spacer(Modifier.height(24.dp))
+        Row(
+            Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowLeft,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(30.dp)
+            )
+            Subtitle(
+                title = "Clothing",
+                style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
+            )
+            Icon(
+                imageVector = Icons.Default.FilterAlt,
+                contentDescription = null,
+                modifier = Modifier.size(25.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = stringResource(R.string.work_in_progress),
-            style = TextStyle(fontSize = 30.sp, fontWeight = FontWeight.Bold),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
+            text = details.size.toString() + " items...",
+            color = colors.primaryVariant, fontSize = 18.sp
         )
-        Spacer(Modifier.height(16.dp))
-        Text(
-            text = stringResource(R.string.grab_beverage),
-            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Normal),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
-        )
+    }
+    DetailView()
+}
+
+@Composable
+fun DetailView() {
+    val context = LocalContext.current
+    Scaffold()
+    { padding ->
+        val detail = remember { ProductFakeData.productList }
+        Box(modifier = Modifier
+            .padding(padding)
+            .padding(top = 20.dp)) {
+            LazyVerticalGrid(
+                contentPadding = PaddingValues(10.dp),
+                verticalArrangement = Arrangement.spacedBy(15.dp),
+                columns = GridCells.Fixed(1)
+            ) {
+                items(detail) {
+                    FavoritesDetailListTile(detail = it, onTap = {
+                        context.startActivity(ProductDetail.newIntent(context, it))
+                    })
+                }
+            }
+        }
     }
 }

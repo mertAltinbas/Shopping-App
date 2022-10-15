@@ -1,7 +1,10 @@
 package com.info.shoppingapp.presentation.screens.navigation.screens.home
 
 import android.content.Intent
-import androidx.compose.foundation.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -12,7 +15,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.ArrowRight
+import androidx.compose.material.icons.filled.FilterAlt
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.rounded.Percent
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -26,7 +31,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.info.shoppingapp.R
 import com.info.shoppingapp.core.databases.CategoryFakeData
 import com.info.shoppingapp.core.databases.NewItemsFakeData
@@ -114,7 +118,7 @@ private fun SearchBar() {
 fun HomeCategories() {
     val context = LocalContext.current
     val data = remember { CategoryFakeData.homeCategoryList }
-    Box() {
+    Box {
         LazyRow(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(20.dp),
