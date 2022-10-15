@@ -1,30 +1,35 @@
-package com.info.shoppingapp.presentation.screens.navigation.screens.basket
+package com.info.shoppingapp.presentation.screens.navigation.screens.basket.view
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.info.shoppingapp.R
+import com.info.shoppingapp.core.databases.BasketFakeData
 import com.info.shoppingapp.presentation.components.Subtitle
 import com.info.shoppingapp.presentation.components.TextButtonX
+import com.info.shoppingapp.presentation.screens.navigation.screens.basket.view_model.BasketItemList
 
 @Composable
 fun BasketView() {
-    val scrollState = rememberScrollState()
-
     Scaffold(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             Row(
                 Modifier
@@ -54,16 +59,26 @@ fun BasketView() {
                 }
             }
         },
+        bottomBar = { BottomNavigationX() },
         backgroundColor = colors.background,
     ) {
         Box(Modifier.padding(it)) {
-            Column(
-                modifier = Modifier
-                    .verticalScroll(scrollState)
-            ) {
+            Column() {
                 Box {
-                    Surface() {
-
+                    Box(Modifier.fillMaxWidth()) {
+                        val data = remember { BasketFakeData.itemsList }
+                        LazyColumn(
+                            userScrollEnabled = false,
+                            verticalArrangement = Arrangement.spacedBy(15.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 20.dp)
+                        ) {
+                            items(data) {
+                                BasketItemList(data = it)
+                            }
+                        }
                     }
                     Column {
                         Spacer(
@@ -110,7 +125,7 @@ fun BasketView() {
                                             color = Color.DarkGray
                                         )
                                         Text(
-                                            text = "1 item",
+                                            text = "2 item",
                                             style = TextStyle(
                                                 fontSize = 20.sp,
                                                 fontWeight = FontWeight.SemiBold
@@ -147,7 +162,7 @@ fun BasketView() {
                                     Row(
                                         Modifier
                                             .fillMaxWidth()
-                                            .padding(bottom = 35.dp),
+                                            .padding(bottom = 10.dp),
                                         verticalAlignment = Alignment.CenterVertically,
                                         horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
@@ -160,33 +175,13 @@ fun BasketView() {
                                             color = Color.DarkGray
                                         )
                                         Text(
-                                            text = "$ 750.00",
+                                            text = "$ 159.00",
                                             style = TextStyle(
                                                 fontSize = 25.sp,
                                                 fontWeight = FontWeight.Bold
                                             ),
-                                            color = MaterialTheme.colors.primary
+                                            color = colors.primary
                                         )
-                                    }
-
-                                    BottomNavigation(
-                                        backgroundColor = MaterialTheme.colors.surface,
-                                        elevation = 0.dp,
-                                        modifier = Modifier
-                                            .padding(bottom = 80.dp)
-                                            .height(70.dp)
-                                    ) {
-                                        Row(
-                                            Modifier
-                                                .fillMaxWidth(),
-                                            horizontalArrangement = Arrangement.Center
-                                        ) {
-                                            TextButtonX(
-                                                text = "Placing an Order",
-                                                modifier = Modifier
-                                                    .size(width = 260.dp, height = 90.dp)
-                                            )
-                                        }
                                     }
                                 }
                             }
@@ -194,6 +189,29 @@ fun BasketView() {
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun BottomNavigationX() {
+    BottomNavigation(
+        backgroundColor = colors.surface,
+        elevation = 0.dp,
+        modifier = Modifier
+            .padding(bottom = 5.dp)
+            .height(70.dp)
+    ) {
+        Row(
+            Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            TextButtonX(
+                text = stringResource(id = R.string.add_basket),
+                modifier = Modifier
+                    .size(width = 260.dp, height = 90.dp)
+            )
         }
     }
 }

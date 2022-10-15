@@ -45,7 +45,7 @@ class CategoriesPage : ComponentActivity() {
             ShoppingAppTheme {
                 val systemUiController = rememberSystemUiController()
                 val isDark = isSystemInDarkTheme()
-                val color = MaterialTheme.colors.background
+                val color = colors.background
                 SideEffect {
                     systemUiController.setSystemBarsColor(
                         color = color,
