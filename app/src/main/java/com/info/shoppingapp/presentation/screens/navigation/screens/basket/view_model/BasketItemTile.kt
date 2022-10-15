@@ -21,7 +21,6 @@ import com.info.shoppingapp.domain.entities.Product
 @Composable
 fun BasketItemList(data: Product) {
     var value by remember { mutableStateOf(1) }
-    var price = value * data.price
 
     Surface(
         color = colors.background,
