@@ -9,8 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -61,9 +60,9 @@ fun BasketView() {
         },
         bottomBar = { BottomNavigationX() },
         backgroundColor = colors.background,
-    ) {
+    ) { it ->
         Box(Modifier.padding(it)) {
-            Column() {
+            Column {
                 Box {
                     Box(Modifier.fillMaxWidth()) {
                         val data = remember { BasketFakeData.itemsList }
@@ -73,7 +72,7 @@ fun BasketView() {
                             horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 20.dp)
+                                .padding(vertical = 35.dp)
                         ) {
                             items(data) {
                                 BasketItemList(data = it)
@@ -106,7 +105,7 @@ fun BasketView() {
                                         text = "Order Info",
                                         fontSize = 25.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = MaterialTheme.colors.primary
+                                        color = colors.primary
                                     )
                                 }
 
