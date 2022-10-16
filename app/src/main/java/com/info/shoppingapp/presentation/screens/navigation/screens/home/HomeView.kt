@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.info.shoppingapp.R
 import com.info.shoppingapp.core.databases.CategoryFakeData
-import com.info.shoppingapp.core.databases.NewItemsFakeData
+import com.info.shoppingapp.core.databases.ProductFakeData
 import com.info.shoppingapp.presentation.components.Subtitle
 import com.info.shoppingapp.presentation.screens.category.CategoriesPage
 import com.info.shoppingapp.presentation.screens.product.ProductDetail
@@ -199,7 +199,7 @@ private fun Discount() {
 
 @Composable
 fun NewItemsList() {
-    val data = remember { NewItemsFakeData.itemsList }
+    val data = remember { ProductFakeData.productList.subList(2,4) }
     val context = LocalContext.current
 
     LazyVerticalGrid(
