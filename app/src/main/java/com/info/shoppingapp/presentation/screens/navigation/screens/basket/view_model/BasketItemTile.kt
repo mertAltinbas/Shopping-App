@@ -16,11 +16,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.info.shoppingapp.domain.entities.BasketProduct
 import com.info.shoppingapp.domain.entities.Product
 
 @Composable
-fun BasketItemList(data: Product) {
-    var value by remember { mutableStateOf(1) }
+fun BasketItemList(data: BasketProduct, onPlusTap: () -> Int, onMinusTap: ()-> Int) {
+    var value by remember { mutableStateOf(data.amount) }
 
     Surface(
         color = colors.background,
@@ -49,7 +50,7 @@ fun BasketItemList(data: Product) {
                 {
                     Image(
                         modifier = Modifier.clip(RoundedCornerShape(15.dp)),
-                        painter = painterResource(id = data.image),
+                        painter = painterResource(id = data.product.image),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         alignment = Alignment.TopCenter
@@ -58,7 +59,7 @@ fun BasketItemList(data: Product) {
                 Column() {
                     Column(Modifier.padding(vertical = 5.dp)) {
                         Text(
-                            text = data.title,
+                            text = data.product.title,
                             color = colors.primaryVariant,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.SemiBold,
@@ -70,7 +71,7 @@ fun BasketItemList(data: Product) {
                         )
                     }
                     Text(
-                        text = "$ " + data.price.toString(), color = colors.primary,
+                        text = "$ " + data.amount * data.product.price, color = colors.primary,
                         fontSize = 21.sp,
                         fontWeight = FontWeight.ExtraBold,
                     )
@@ -83,7 +84,9 @@ fun BasketItemList(data: Product) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    TextButton(onClick = { if (value != 1) value-- }) {
+                    TextButton(onClick = {
+                        value = onMinusTap.invoke()
+                    }) {
                         Text(
                             text = "-",
                             fontSize = 65.sp,
@@ -93,12 +96,14 @@ fun BasketItemList(data: Product) {
                     }
 
                     Text(
-                        text = "$value",
+                        text = value.toString(),
                         fontWeight = FontWeight.Medium,
                         fontSize = 25.sp
                     )
 
-                    TextButton(onClick = { value++ }) {
+                    TextButton(onClick = {
+                        value = onPlusTap.invoke()
+                    }) {
                         Text(
                             text = "+",
                             fontSize = 35.sp,

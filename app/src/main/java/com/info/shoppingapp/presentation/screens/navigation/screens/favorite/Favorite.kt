@@ -20,14 +20,20 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.info.shoppingapp.core.databases.ProductFakeData
+import com.info.shoppingapp.domain.repositories.IProductRepository
+import com.info.shoppingapp.infrastructure.data_sources.product.ProductFakeDataSource
+import com.info.shoppingapp.infrastructure.data_sources.product.ProductLocalDataSource
+import com.info.shoppingapp.infrastructure.data_sources.product.ProductRemoteDataSource
+import com.info.shoppingapp.infrastructure.repositories.ProductRepository
 import com.info.shoppingapp.presentation.components.Subtitle
 import com.info.shoppingapp.presentation.screens.product.ProductDetail
 import com.info.shoppingapp.presentation.tiles.favorites.FavoritesDetailListTile
 
+private val repository : IProductRepository = ProductRepository(ProductRemoteDataSource(), ProductLocalDataSource(), ProductFakeDataSource())
+
 @Composable
 fun FavoriteScreen() {
-    val details = remember { ProductFakeData.productList }
+    val details = remember { repository.getProducts() }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -69,7 +75,7 @@ fun DetailView() {
     val context = LocalContext.current
     Scaffold()
     { padding ->
-        val detail = remember { ProductFakeData.productList }
+        val detail = remember { repository.getProducts() }
         Box(modifier = Modifier
             .padding(padding)
             .padding(top = 20.dp)) {

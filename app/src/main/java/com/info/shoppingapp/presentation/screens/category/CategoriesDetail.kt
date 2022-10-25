@@ -17,19 +17,24 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.info.shoppingapp.core.databases.ProductFakeData
+import com.info.shoppingapp.domain.repositories.IProductRepository
+import com.info.shoppingapp.infrastructure.data_sources.product.ProductFakeDataSource
+import com.info.shoppingapp.infrastructure.data_sources.product.ProductLocalDataSource
+import com.info.shoppingapp.infrastructure.data_sources.product.ProductRemoteDataSource
+import com.info.shoppingapp.infrastructure.repositories.ProductRepository
 import com.info.shoppingapp.presentation.components.Subtitle
 import com.info.shoppingapp.presentation.screens.product.ProductDetail
 import com.info.shoppingapp.presentation.tiles.categories.CategoriesDetailListTile
 import com.info.shoppingapp.presentation.ui.theme.ShoppingAppTheme
 
 class CategoriesDetail : ComponentActivity() {
+
+    private val repository : IProductRepository = ProductRepository(ProductRemoteDataSource(), ProductLocalDataSource(), ProductFakeDataSource())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +65,7 @@ class CategoriesDetail : ComponentActivity() {
 
     @Composable
     fun DetailPage() {
-        val details = remember { ProductFakeData.productList }
+        val details = remember { repository.getProducts() }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -102,7 +107,7 @@ class CategoriesDetail : ComponentActivity() {
     fun DetailView() {
         Scaffold()
         { padding ->
-            val detail = remember { ProductFakeData.productList }
+            val productList = remember { repository.getProducts() }
             Box(modifier = Modifier
                 .padding(padding)
                 .padding(top = 20.dp)) {
@@ -111,7 +116,7 @@ class CategoriesDetail : ComponentActivity() {
                     verticalArrangement = Arrangement.spacedBy(15.dp),
                     columns = GridCells.Adaptive(minSize = 150.dp)
                 ) {
-                    items(detail) {
+                    items(productList) {
                         CategoriesDetailListTile(detail = it, onTap = {
                             startActivity(ProductDetail.newIntent(applicationContext, it))
                         })

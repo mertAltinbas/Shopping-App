@@ -27,6 +27,7 @@ import com.info.shoppingapp.presentation.screens.navigation.screens.basket.view_
 
 @Composable
 fun BasketView() {
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -61,11 +62,15 @@ fun BasketView() {
         bottomBar = { BottomNavigationX() },
         backgroundColor = colors.background,
     ) { it ->
+        val productList = remember { BasketFakeData.itemsList }
+        var total by remember {
+            mutableStateOf(productList.map { it.amount * it.product.price }.sum())
+        }
         Box(Modifier.padding(it)) {
             Column {
                 Box {
                     Box(Modifier.fillMaxWidth()) {
-                        val data = remember { BasketFakeData.itemsList }
+
                         LazyColumn(
                             userScrollEnabled = false,
                             verticalArrangement = Arrangement.spacedBy(15.dp),
@@ -74,8 +79,18 @@ fun BasketView() {
                                 .fillMaxWidth()
                                 .padding(vertical = 35.dp)
                         ) {
-                            items(data) {
-                                BasketItemList(data = it)
+                            items(productList) { product ->
+                                BasketItemList(data = product, onMinusTap = {
+                                    if (product.amount != 1)
+                                        --product.amount
+                                    total = productList.map { it.amount * it.product.price }.sum()
+                                    product.amount
+                                }, onPlusTap = {
+                                    ++product.amount
+                                    total = productList.map { it.amount * it.product.price }.sum()
+
+                                    product.amount
+                                })
                             }
                         }
                     }
@@ -174,7 +189,7 @@ fun BasketView() {
                                             color = Color.DarkGray
                                         )
                                         Text(
-                                            text = "$ 159.00",
+                                            text = "$ $total",
                                             style = TextStyle(
                                                 fontSize = 25.sp,
                                                 fontWeight = FontWeight.Bold
