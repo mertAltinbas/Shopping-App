@@ -1,5 +1,7 @@
 package com.info.shoppingapp.presentation.screens.category
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,6 +24,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.info.shoppingapp.core.databases.ProductFakeData
+import com.info.shoppingapp.domain.entities.Category
+import com.info.shoppingapp.domain.entities.Product
 import com.info.shoppingapp.domain.repositories.IProductRepository
 import com.info.shoppingapp.infrastructure.data_sources.product.ProductFakeDataSource
 import com.info.shoppingapp.infrastructure.data_sources.product.ProductLocalDataSource
@@ -33,8 +38,15 @@ import com.info.shoppingapp.presentation.tiles.categories.CategoriesDetailListTi
 import com.info.shoppingapp.presentation.ui.theme.ShoppingAppTheme
 
 class CategoriesDetail : ComponentActivity() {
+    private val data: Category by lazy {
+        intent?.getSerializableExtra(UrunAdi) as Category
+    }
 
-    private val repository : IProductRepository = ProductRepository(ProductRemoteDataSource(), ProductLocalDataSource(), ProductFakeDataSource())
+    private val repository: IProductRepository = ProductRepository(
+        ProductRemoteDataSource(),
+        ProductLocalDataSource(),
+        ProductFakeDataSource()
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +77,8 @@ class CategoriesDetail : ComponentActivity() {
 
     @Composable
     fun DetailPage() {
-        val details = remember { repository.getProducts() }
+//        val details = remember { repository.getProducts() }
+        val details = remember { ProductFakeData.productList }
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -85,7 +98,7 @@ class CategoriesDetail : ComponentActivity() {
                         .clickable { onBackPressedDispatcher.onBackPressed() }
                 )
                 Subtitle(
-                    title = "Clothing",
+                    title = data.category,
                     style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
                 )
                 Icon(
@@ -107,16 +120,19 @@ class CategoriesDetail : ComponentActivity() {
     fun DetailView() {
         Scaffold()
         { padding ->
-            val productList = remember { repository.getProducts() }
-            Box(modifier = Modifier
-                .padding(padding)
-                .padding(top = 20.dp)) {
+//        val details = remember { repository.getProducts() }
+            val details = remember { ProductFakeData.productList }
+            Box(
+                modifier = Modifier
+                    .padding(padding)
+                    .padding(top = 20.dp)
+            ) {
                 LazyVerticalGrid(
                     contentPadding = PaddingValues(10.dp),
                     verticalArrangement = Arrangement.spacedBy(15.dp),
                     columns = GridCells.Adaptive(minSize = 150.dp)
                 ) {
-                    items(productList) {
+                    items(details) {
                         CategoriesDetailListTile(detail = it, onTap = {
                             startActivity(ProductDetail.newIntent(applicationContext, it))
                         })
@@ -124,5 +140,13 @@ class CategoriesDetail : ComponentActivity() {
                 }
             }
         }
+    }
+
+    companion object {
+        private const val UrunAdi = "urunid"
+        fun newIntent(context: Context, data: Category) =
+            Intent(context, CategoriesDetail::class.java).apply {
+                putExtra(UrunAdi, data)
+            }
     }
 }

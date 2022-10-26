@@ -17,9 +17,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.KeyboardArrowLeft
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -96,6 +94,7 @@ class ProductDetail : ComponentActivity() {
                         painter = painterResource(id = data.image),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
+                        alignment = Alignment.TopCenter,
                         modifier = Modifier
                             .aspectRatio(.7f)
                     )
@@ -241,6 +240,7 @@ class ProductDetail : ComponentActivity() {
     @Composable
     fun SizeX() {
         val sizex = remember { SizeData.sizeList }
+
         Box() {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -260,6 +260,5 @@ class ProductDetail : ComponentActivity() {
             Intent(context, ProductDetail::class.java).apply {
                 putExtra(UrunAdi, data)
             }
-
     }
 }

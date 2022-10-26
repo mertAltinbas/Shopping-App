@@ -49,6 +49,7 @@ fun CategoriesDetailListTile(detail: Product, onTap: (() -> Unit) = { }) {
                             .height(200.dp)
                             .clip(RoundedCornerShape(12.dp)),
                         contentScale = ContentScale.Crop,
+                        alignment = Alignment.TopCenter
                     )
                     Surface(
                         shape = CircleShape,

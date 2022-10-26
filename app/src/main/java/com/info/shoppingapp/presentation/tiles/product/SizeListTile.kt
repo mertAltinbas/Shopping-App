@@ -15,9 +15,12 @@ import com.info.shoppingapp.presentation.components.TextButtonX
 
 @Composable
 fun SizeItem(size: SizeX) {
+
     Surface(
-        color = MaterialTheme.colors.background,
-        modifier = Modifier.clip(CircleShape),
+        modifier = Modifier
+            .clip(CircleShape) ,
+        color = MaterialTheme.colors.background
+
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             TextButtonX(

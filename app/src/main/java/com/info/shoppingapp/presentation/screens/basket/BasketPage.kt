@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -53,178 +52,180 @@ class BasketPage : ComponentActivity() {
             }
         }
     }
-}
 
-@Composable
-private fun Basket() {
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .statusBarsPadding()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(Modifier.weight(1f)) {
-                    Icon(
-                        imageVector = Icons.Default.KeyboardArrowLeft,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(30.dp)
-                            .clickable {  }
-                    )
-                }
-                Column(Modifier.weight(1.5f)) {
-                    Subtitle(
-                        title = "Basket",
-                        style = TextStyle(
-                            fontSize = 25.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            textAlign = TextAlign.Center
-                        ),
-                    )
-                }
-            }
-        },
-        bottomBar = { BottomNavigationX() },
-        backgroundColor = MaterialTheme.colors.background,
-    ) { it ->
-        val productList = remember { BasketFakeData.itemsList }
-        var total by remember {
-            mutableStateOf(productList.map { it.amount * it.product.price }.sum())
-        }
-        Box(Modifier.padding(it)) {
-            Column {
-                Box {
-                    Box(Modifier.fillMaxWidth()) {
-
-                        LazyColumn(
-                            userScrollEnabled = false,
-                            verticalArrangement = Arrangement.spacedBy(15.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
+    @Composable
+    private fun Basket() {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .statusBarsPadding()
+                        .padding(horizontal = 15.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(Modifier.weight(1f)) {
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowLeft,
+                            contentDescription = null,
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 35.dp)
-                        ) {
-                            items(productList) { product ->
-                                BasketItemList(data = product, onMinusTap = {
-                                    if (product.amount != 1)
-                                        --product.amount
-                                    total = productList.map { it.amount * it.product.price }.sum()
-                                    product.amount
-                                }, onPlusTap = {
-                                    ++product.amount
-                                    total = productList.map { it.amount * it.product.price }.sum()
+                                .size(30.dp)
+                                .clickable { onBackPressedDispatcher.onBackPressed() }
+                        )
+                    }
+                    Column(Modifier.weight(1.5f)) {
+                        Subtitle(
+                            title = "Basket",
+                            style = TextStyle(
+                                fontSize = 25.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                textAlign = TextAlign.Center
+                            ),
+                        )
+                    }
+                }
+            },
+            bottomBar = { BottomNavigationX() },
+            backgroundColor = MaterialTheme.colors.background,
+        ) { it ->
+            val productList = remember { BasketFakeData.itemsList }
+            var total by remember {
+                mutableStateOf(productList.map { it.amount * it.product.price }.sum())
+            }
+            Box(Modifier.padding(it)) {
+                Column {
+                    Box {
+                        Box(Modifier.fillMaxWidth()) {
 
-                                    product.amount
-                                })
+                            LazyColumn(
+                                userScrollEnabled = false,
+                                verticalArrangement = Arrangement.spacedBy(15.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 35.dp)
+                            ) {
+                                items(productList) { product ->
+                                    BasketItemList(data = product, onMinusTap = {
+                                        if (product.amount != 1)
+                                            --product.amount
+                                        total =
+                                            productList.map { it.amount * it.product.price }.sum()
+                                        product.amount
+                                    }, onPlusTap = {
+                                        ++product.amount
+                                        total =
+                                            productList.map { it.amount * it.product.price }.sum()
+
+                                        product.amount
+                                    })
+                                }
                             }
                         }
-                    }
-                    Column {
-                        Spacer(
-                            modifier = Modifier
-                                .aspectRatio(1.2f)
-                        )
-                        Surface(
-                            shape = RoundedCornerShape(30.dp, 30.dp),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                        ) {
-                            Column(
-                                Modifier
-                                    .fillMaxSize()
-                                    .padding(vertical = 15.dp)
+                        Column {
+                            Spacer(
+                                modifier = Modifier
+                                    .aspectRatio(1.2f)
+                            )
+                            Surface(
+                                shape = RoundedCornerShape(30.dp, 30.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
                             ) {
-                                Row(
+                                Column(
                                     Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 5.dp, horizontal = 25.dp),
-                                    horizontalArrangement = Arrangement.Center,
-                                    verticalAlignment = Alignment.CenterVertically
+                                        .fillMaxSize()
+                                        .padding(vertical = 15.dp)
                                 ) {
-                                    Text(
-                                        text = "Order Info",
-                                        fontSize = 25.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = MaterialTheme.colors.primary
-                                    )
-                                }
-
-                                Column(Modifier.padding(vertical = 25.dp, horizontal = 25.dp)) {
-                                    Row(
-                                        Modifier.fillMaxWidth(),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Text(
-                                            text = "Bright beret (M)",
-                                            style = TextStyle(
-                                                fontSize = 20.sp,
-                                                fontWeight = FontWeight.SemiBold
-                                            ),
-                                            color = Color.DarkGray
-                                        )
-                                        Text(
-                                            text = "2 item",
-                                            style = TextStyle(
-                                                fontSize = 20.sp,
-                                                fontWeight = FontWeight.SemiBold
-                                            ),
-                                            color = Color.DarkGray
-                                        )
-                                    }
-
                                     Row(
                                         Modifier
                                             .fillMaxWidth()
-                                            .padding(vertical = 15.dp),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween
+                                            .padding(vertical = 5.dp, horizontal = 25.dp),
+                                        horizontalArrangement = Arrangement.Center,
+                                        verticalAlignment = Alignment.CenterVertically
                                     ) {
                                         Text(
-                                            text = "Delivery",
-                                            style = TextStyle(
-                                                fontSize = 20.sp,
-                                                fontWeight = FontWeight.SemiBold
-                                            ),
-                                            color = Color.DarkGray
-                                        )
-                                        Text(
-                                            text = "$ 10.00",
-                                            style = TextStyle(
-                                                fontSize = 25.sp,
-                                                fontWeight = FontWeight.Bold
-                                            ),
+                                            text = "Order Info",
+                                            fontSize = 25.sp,
+                                            fontWeight = FontWeight.Bold,
                                             color = MaterialTheme.colors.primary
                                         )
                                     }
 
-                                    Row(
-                                        Modifier
-                                            .fillMaxWidth()
-                                            .padding(bottom = 10.dp),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Text(
-                                            text = "Price",
-                                            style = TextStyle(
-                                                fontSize = 20.sp,
-                                                fontWeight = FontWeight.SemiBold
-                                            ),
-                                            color = Color.DarkGray
-                                        )
-                                        Text(
-                                            text = "$ $total",
-                                            style = TextStyle(
-                                                fontSize = 25.sp,
-                                                fontWeight = FontWeight.Bold
-                                            ),
-                                            color = MaterialTheme.colors.primary
-                                        )
+                                    Column(Modifier.padding(vertical = 25.dp, horizontal = 25.dp)) {
+                                        Row(
+                                            Modifier.fillMaxWidth(),
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.SpaceBetween
+                                        ) {
+                                            Text(
+                                                text = "Bright beret (M)",
+                                                style = TextStyle(
+                                                    fontSize = 20.sp,
+                                                    fontWeight = FontWeight.SemiBold
+                                                ),
+                                                color = Color.DarkGray
+                                            )
+                                            Text(
+                                                text = "2 item",
+                                                style = TextStyle(
+                                                    fontSize = 20.sp,
+                                                    fontWeight = FontWeight.SemiBold
+                                                ),
+                                                color = Color.DarkGray
+                                            )
+                                        }
+
+                                        Row(
+                                            Modifier
+                                                .fillMaxWidth()
+                                                .padding(vertical = 15.dp),
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.SpaceBetween
+                                        ) {
+                                            Text(
+                                                text = "Delivery",
+                                                style = TextStyle(
+                                                    fontSize = 20.sp,
+                                                    fontWeight = FontWeight.SemiBold
+                                                ),
+                                                color = Color.DarkGray
+                                            )
+                                            Text(
+                                                text = "$ 10.00",
+                                                style = TextStyle(
+                                                    fontSize = 25.sp,
+                                                    fontWeight = FontWeight.Bold
+                                                ),
+                                                color = MaterialTheme.colors.primary
+                                            )
+                                        }
+
+                                        Row(
+                                            Modifier
+                                                .fillMaxWidth()
+                                                .padding(bottom = 10.dp),
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.SpaceBetween
+                                        ) {
+                                            Text(
+                                                text = "Price",
+                                                style = TextStyle(
+                                                    fontSize = 20.sp,
+                                                    fontWeight = FontWeight.SemiBold
+                                                ),
+                                                color = Color.DarkGray
+                                            )
+                                            Text(
+                                                text = "$ $total",
+                                                style = TextStyle(
+                                                    fontSize = 25.sp,
+                                                    fontWeight = FontWeight.Bold
+                                                ),
+                                                color = MaterialTheme.colors.primary
+                                            )
+                                        }
                                     }
                                 }
                             }
@@ -234,25 +235,25 @@ private fun Basket() {
             }
         }
     }
-}
 
-@Composable
-private fun BottomNavigationX() {
-    BottomNavigation(
-        backgroundColor = MaterialTheme.colors.surface,
-        elevation = 0.dp,
-        modifier = Modifier.height(70.dp)
-    ) {
-        Row(
-            Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+    @Composable
+    private fun BottomNavigationX() {
+        BottomNavigation(
+            backgroundColor = MaterialTheme.colors.surface,
+            elevation = 0.dp,
+            modifier = Modifier.height(70.dp)
         ) {
-            TextButtonX(
-                text = "Placing an Order",
-                modifier = Modifier
-                    .size(width = 260.dp, height = 90.dp)
-            )
+            Row(
+                Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                TextButtonX(
+                    text = "Placing an Order",
+                    modifier = Modifier
+                        .size(width = 260.dp, height = 90.dp)
+                )
+            }
         }
     }
 }

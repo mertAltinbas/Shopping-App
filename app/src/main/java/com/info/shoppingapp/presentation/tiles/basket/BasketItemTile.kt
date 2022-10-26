@@ -1,8 +1,10 @@
 package com.info.shoppingapp.presentation.tiles.basket
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -11,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -20,7 +23,7 @@ import com.info.shoppingapp.domain.entities.BasketProduct
 import com.info.shoppingapp.domain.entities.Product
 
 @Composable
-fun BasketItemList(data: BasketProduct, onPlusTap: () -> Int, onMinusTap: ()-> Int) {
+fun BasketItemList(data: BasketProduct, onPlusTap: () -> Int, onMinusTap: () -> Int) {
     var value by remember { mutableStateOf(data.amount) }
 
     Surface(
@@ -82,11 +85,13 @@ fun BasketItemList(data: BasketProduct, onPlusTap: () -> Int, onMinusTap: ()-> I
             {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Center,
                 ) {
-                    TextButton(onClick = {
-                        value = onMinusTap.invoke()
-                    }) {
+                    TextButton(
+                        onClick = {
+                            value = onMinusTap.invoke()
+                        }
+                    ) {
                         Text(
                             text = "-",
                             fontSize = 65.sp,

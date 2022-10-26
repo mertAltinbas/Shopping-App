@@ -133,7 +133,7 @@ class CategoriesPage : ComponentActivity() {
                         ) {
                             items(data) {
                                 CategoriesListTile(category = it, onTap = {
-                                    context.startActivity(Intent(context, CategoriesDetail::class.java))
+                                    context.startActivity(CategoriesDetail.newIntent(context, it))
                                 })
                             }
                         }

@@ -17,7 +17,6 @@
         <activity
             android:name=".presentation.screens.basket.BasketPage"
             android:exported="false"
-            android:label="@string/title_activity_basket_pa_ge"
             android:theme="@style/Theme.ShoppingApp">
             <meta-data
                 android:name="android.app.lib_name"
