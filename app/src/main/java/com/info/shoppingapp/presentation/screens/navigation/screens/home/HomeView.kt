@@ -205,7 +205,7 @@ private val repository : IProductRepository = ProductRepository(ProductRemoteDat
 
 @Composable
 fun NewItemsList() {
-    val data = remember { repository.getProducts() }
+    val data = remember { repository.getProducts().subList(0,2) }
     val context = LocalContext.current
 
     LazyVerticalGrid(
