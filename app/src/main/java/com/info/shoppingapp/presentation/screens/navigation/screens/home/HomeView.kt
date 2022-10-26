@@ -79,6 +79,7 @@ fun HomeView() {
 @Composable
 private fun SearchBar() {
     var text by remember { mutableStateOf(TextFieldValue("")) }
+    val context = LocalContext.current
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically,
@@ -110,7 +111,9 @@ private fun SearchBar() {
             )
         }
         Spacer(modifier = Modifier.width(5.dp))
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = {
+            context.startActivity(Intent(context, CategoriesPage::class.java))
+        }) {
             Icon(
                 imageVector = Icons.Default.FilterAlt,
                 contentDescription = null,
