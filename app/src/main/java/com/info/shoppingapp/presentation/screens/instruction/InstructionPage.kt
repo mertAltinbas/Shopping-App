@@ -102,6 +102,7 @@ fun SliderContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HorizontalPagerIndicator(
+                modifier = Modifier.padding(top = 10.dp),
                 pagerState = pagerState,
                 activeColor = Color.Black,
                 inactiveColor = Color.LightGray,

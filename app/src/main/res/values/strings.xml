@@ -35,12 +35,14 @@
     // Product Content
     <string name="description">Description</string>
     <string name="choose_size">Choose Size</string>
-    
+
     // Profile Screen
     <string name="work_in_progress">This is currently work in progress</string>
     <string name="grab_beverage">Grab a beverage and check back later!</string>
 
     <string name="title_activity_categories">Categories</string>
     <string name="title_activity_basket">Basket</string>
+    <string name="title_activity_basket_pa_ge">BasketPaGE</string>
+    <string name="title_activity_basket_page">BasketPage</string>
 
 </resources>

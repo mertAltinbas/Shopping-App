@@ -1,4 +1,4 @@
-package com.info.shoppingapp.presentation.screens.navigation.screens.basket.view_model
+package com.info.shoppingapp.presentation.tiles.basket
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

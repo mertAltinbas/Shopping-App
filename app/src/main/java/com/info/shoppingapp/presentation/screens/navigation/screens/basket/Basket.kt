@@ -1,4 +1,4 @@
-package com.info.shoppingapp.presentation.screens.navigation.screens.basket.view
+package com.info.shoppingapp.presentation.screens.navigation.screens.basket
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -23,11 +23,10 @@ import com.info.shoppingapp.R
 import com.info.shoppingapp.core.databases.BasketFakeData
 import com.info.shoppingapp.presentation.components.Subtitle
 import com.info.shoppingapp.presentation.components.TextButtonX
-import com.info.shoppingapp.presentation.screens.navigation.screens.basket.view_model.BasketItemList
+import com.info.shoppingapp.presentation.tiles.basket.BasketItemList
 
 @Composable
 fun BasketView() {
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -213,7 +212,6 @@ private fun BottomNavigationX() {
         backgroundColor = colors.surface,
         elevation = 0.dp,
         modifier = Modifier
-            .padding(bottom = 5.dp)
             .height(70.dp)
     ) {
         Row(
@@ -222,7 +220,7 @@ private fun BottomNavigationX() {
             horizontalArrangement = Arrangement.Center
         ) {
             TextButtonX(
-                text = stringResource(id = R.string.add_basket),
+                text = "Placing an Order",
                 modifier = Modifier
                     .size(width = 260.dp, height = 90.dp)
             )

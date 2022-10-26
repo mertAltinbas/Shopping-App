@@ -8,11 +8,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Circle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -104,25 +108,33 @@ class NavigationActivity : ComponentActivity() {
         currentDestination: NavDestination?,
         navController: NavController
     ) {
+        val isSelected = currentDestination?.hierarchy?.any {
+            it.route == screen.route
+        } == true
+
         BottomNavigationItem(
-            label = {
-                Text(
-                    text = ".",
-                    style = TextStyle(fontWeight = FontWeight.SemiBold, fontSize = 35.sp)
-                )
-            },
             icon = {
-                Icon(
-                    imageVector = screen.icon,
-                    contentDescription = "Navigation Icon",
-                    modifier = Modifier
-                        .weight(1f)
-                        .size(30.dp),
-                )
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Box(modifier = Modifier.weight(1f)) {
+                        Icon(
+                            imageVector = screen.icon,
+                            contentDescription = "Navigation Icon",
+                            modifier = Modifier.size(26.dp).align(Alignment.Center),
+                        )
+                    }
+                    Icon(
+                        imageVector = Icons.Rounded.Circle,
+                        contentDescription = null,
+                        modifier = Modifier.size(8.dp),
+                        tint = if(isSelected) colors.onPrimary else Color.Transparent
+
+                    )
+                    Spacer(modifier = Modifier.height(5.dp))
+                }
             },
-            selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-            selectedContentColor = colors.onPrimary,
+            selected = isSelected,
             unselectedContentColor = colors.primaryVariant,
+            selectedContentColor = colors.onPrimary,
             onClick = {
                 navController.navigate(screen.route) {
                     popUpTo(navController.graph.findStartDestination().id)

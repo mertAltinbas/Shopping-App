@@ -15,6 +15,15 @@
         android:theme="@style/Theme.ShoppingApp"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.screens.basket.BasketPage"
+            android:exported="false"
+            android:label="@string/title_activity_basket_pa_ge"
+            android:theme="@style/Theme.ShoppingApp">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".presentation.screens.category.CategoriesPage"
             android:exported="false"
             android:label="@string/title_activity_categories"

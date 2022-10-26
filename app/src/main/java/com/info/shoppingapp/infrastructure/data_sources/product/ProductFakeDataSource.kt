@@ -8,9 +8,9 @@ class ProductFakeDataSource {
         return List(size = 5) {
             Product(
                 title = "Product $it",
-                price = 160.00f,
+                price = 60.00f,
                 description = "description",
-                image = R.drawable.light_dress,
+                image = R.drawable.autumn_coat,
                 isLiked = it % 2 == 0,
                 sizies = listOf("XS", "S", "M", "L", "XL")
             )

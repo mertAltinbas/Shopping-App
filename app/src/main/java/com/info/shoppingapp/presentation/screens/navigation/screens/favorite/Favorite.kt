@@ -33,40 +33,6 @@ private val repository : IProductRepository = ProductRepository(ProductRemoteDat
 
 @Composable
 fun FavoriteScreen() {
-    val details = remember { repository.getProducts() }
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .padding(horizontal = 10.dp)
-            .statusBarsPadding()
-    ) {
-        Row(
-            Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowLeft,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(30.dp)
-            )
-            Subtitle(
-                title = "Clothing",
-                style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.SemiBold)
-            )
-            Icon(
-                imageVector = Icons.Default.FilterAlt,
-                contentDescription = null,
-                modifier = Modifier.size(25.dp)
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = details.size.toString() + " items...",
-            color = colors.primaryVariant, fontSize = 18.sp
-        )
-    }
     DetailView()
 }
 

@@ -91,7 +91,9 @@ private fun SearchBar() {
             modifier = Modifier.border(BorderStroke(1.dp, Color.Black), RoundedCornerShape(15.dp))
         ) {
             TextField(
+                colors = TextFieldDefaults.textFieldColors(focusedIndicatorColor = Color.Transparent),
                 value = text,
+                maxLines = 1,
                 onValueChange = {
                     text = it
                 },
@@ -106,6 +108,7 @@ private fun SearchBar() {
                 modifier = Modifier.padding(end = 12.dp)
             )
         }
+        Spacer(modifier = Modifier.width(5.dp))
         IconButton(onClick = { /*TODO*/ }) {
             Icon(
                 imageVector = Icons.Default.FilterAlt,
@@ -171,12 +174,15 @@ private fun Discount() {
                         imageVector = Icons.Rounded.Percent,
                         contentDescription = null,
                         modifier = Modifier
-                            .size(70.dp)
+                            .size(80.dp)
                             .padding(24.dp),
                         tint = Color.Black
                     )
                 }
-                Column(verticalArrangement = Arrangement.SpaceBetween) {
+                Column(
+                    verticalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.padding(end = 30.dp)
+                ) {
                     Text(
                         text = stringResource(id = R.string.firstDiscountSentence),
                         fontWeight = FontWeight.Bold,
@@ -201,11 +207,12 @@ private fun Discount() {
     }
 }
 
-private val repository : IProductRepository = ProductRepository(ProductRemoteDataSource(), ProductLocalDataSource(), ProductFakeDataSource())
+private val repository: IProductRepository =
+    ProductRepository(ProductRemoteDataSource(), ProductLocalDataSource(), ProductFakeDataSource())
 
 @Composable
 fun NewItemsList() {
-    val data = remember { repository.getProducts().subList(0,2) }
+    val data = remember { repository.getProducts().subList(0, 2) }
     val context = LocalContext.current
 
     LazyVerticalGrid(

@@ -1,5 +1,6 @@
 package com.info.shoppingapp.presentation.tiles.favorites
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.info.shoppingapp.domain.entities.Product
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun FavoritesDetailListTile(detail: Product, onTap: (() -> Unit) = { }) {
     if (detail.isLiked)
